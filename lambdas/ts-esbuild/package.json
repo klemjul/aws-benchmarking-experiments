@@ -1,0 +1,14 @@
+{
+  "name": "@aws-benchmarking-experiments/ts-esbuild",
+  "version": "0.0.0",
+  "main": "dist/app/index.js",
+  "scripts": {
+    "build": "rimraf dist && esbuild app.ts --bundle --platform=node --target=node20 --outfile=./dist/app/index.js"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.145",
+    "esbuild": "0.23.1",
+    "rimraf": "6.0.1",
+    "typescript": "5.5.4"
+  }
+}

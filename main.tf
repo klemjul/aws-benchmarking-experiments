@@ -5,6 +5,10 @@ terraform {
       version = "5.66"
     }
   }
+
+  backend "s3" {
+    key = "terraform.tfstate"
+  }
 }
 
 provider "aws" {

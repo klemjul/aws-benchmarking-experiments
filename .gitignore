@@ -11,3 +11,5 @@ crash.log
 
 # Ignore .terraform directory
 .terraform/
+
+*.conf

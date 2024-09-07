@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "dist/app/index.js",
   "scripts": {
-    "build": "rimraf dist && esbuild app.ts --bundle --platform=node --target=node20 --outfile=./dist/app/index.js"
+    "build": "rimraf dist && esbuild app.ts --bundle --platform=node --target=node20 --outfile=./dist/app/index.js && cd dist/app && zip -r ../app.zip *"
   },
   "devDependencies": {
     "@types/aws-lambda": "8.10.145",

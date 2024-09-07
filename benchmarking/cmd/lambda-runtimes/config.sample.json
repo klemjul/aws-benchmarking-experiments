@@ -5,6 +5,12 @@
     },
     {
       "functionName": "aws-benchmarking-experiments-java-lambda"
+    },
+    {
+      "functionName": "aws-benchmarking-experiments-go-lambda"
+    },
+    {
+      "functionName": "aws-benchmarking-experiments-python-lambda"
     }
   ]
 }

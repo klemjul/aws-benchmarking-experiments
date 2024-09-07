@@ -35,3 +35,25 @@ module "java_lambda_module" {
   lambda_runtime   = "java21"
   lambda_zip_path  = "./lambdas/java/target/app.jar"
 }
+
+module "go_lambda_module" {
+  source           = "./modules/lambda"
+  aws_region       = var.aws_region
+  lambda_name      = "${var.resource_prefix}-go-lambda"
+  lambda_role_name = "${var.resource_prefix}-go-lambda-role"
+  lambda_handler   = "bootstrap"
+  lambda_runtime   = "provided.al2023"
+  lambda_zip_path  = "./lambdas/go/bin/app.zip"
+}
+
+
+module "python_lambda_module" {
+  source           = "./modules/lambda"
+  aws_region       = var.aws_region
+  lambda_name      = "${var.resource_prefix}-python-lambda"
+  lambda_role_name = "${var.resource_prefix}-python-lambda-role"
+  lambda_handler   = "app.lambda_handler"
+  lambda_runtime   = "python3.12"
+  lambda_zip_path  = "./lambdas/python/dist/app.zip"
+}
+

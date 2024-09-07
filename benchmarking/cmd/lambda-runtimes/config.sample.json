@@ -1,0 +1,10 @@
+{
+  "lambdas": [
+    {
+      "functionName": "aws-benchmarking-experiments-ts-esbuild-lambda"
+    },
+    {
+      "functionName": "aws-benchmarking-experiments-java-lambda"
+    }
+  ]
+}

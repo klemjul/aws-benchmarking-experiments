@@ -53,7 +53,7 @@ func main() {
 	}
 	lambdaClient := lambda.NewFromConfig(sdkConfig)
 
-	results := make(chan internal.Result[internal.InvokeLambdaTimedOutput], len(config.Lambdas))
+	results := make(chan internal.Result[internal.InvokeLambdaTimedOutput], len(config.Lambdas)*2)
 	var values []internal.Result[internal.InvokeLambdaTimedOutput]
 	var wg sync.WaitGroup
 
@@ -66,6 +66,7 @@ func main() {
 				fmt.Printf("%s Failed to ForceLambdaColdStart for lambda, %v \n", config.Lambdas[i].FunctionName, err)
 			}
 			results <- internal.InvokeLambdaTimed(context.TODO(), lambdaClient, config.Lambdas[i].FunctionName, nil)
+
 		}()
 	}
 
@@ -73,7 +74,7 @@ func main() {
 	close(results)
 
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"FunctionName", "SdkDuration", "Duration", "InitDuration", "MaxMemoruUsed"})
+	table.SetHeader([]string{"NAME", "TOTAL_CLIENT", "RUNTIME", "INIT", "Max_MEMORY_USED"})
 	for result := range results {
 		values = append(values, result)
 	}

@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 	"sync"
 
 	awsconfig "github.com/aws/aws-sdk-go-v2/config"
@@ -64,12 +65,15 @@ func main() {
 	close(results)
 
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"FunctionName", "Duration", "Output"})
+	table.SetHeader([]string{"FunctionName", "SdkDuration", "Duration", "InitDuration", "Duration", "MaxMemoruUsed"})
 	for result := range results {
+		fnType := strings.Split(result.Value.FunctionName, "aws-benchmarking-experiments-")
+
 		if result.Error != nil {
-			table.Append([]string{result.Value.FunctionName, result.Value.Duration.String(), result.Error.Error()})
+			fmt.Println(result.Error)
+			table.Append([]string{fnType[1], result.Value.SdkDuration, result.Value.Duration})
 		} else {
-			table.Append([]string{result.Value.FunctionName, result.Value.Duration.String(), string(result.Value.Response)})
+			table.Append([]string{fnType[1], result.Value.SdkDuration, result.Value.Duration, result.Value.InitDuration, result.Value.Duration, result.Value.MaxMemoryUsed})
 		}
 	}
 	table.Render()

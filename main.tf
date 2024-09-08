@@ -57,3 +57,23 @@ module "python_lambda_module" {
   lambda_zip_path  = "./lambdas/python/dist/app.zip"
 }
 
+module "dotnet_lambda_module" {
+  source           = "./modules/lambda"
+  aws_region       = var.aws_region
+  lambda_name      = "${var.resource_prefix}-dotnet-lambda"
+  lambda_role_name = "${var.resource_prefix}-dotnet-lambda-role"
+  lambda_handler   = "MyDotNetLambda::MyDotNetLambda.Function::FunctionHandler"
+  lambda_runtime   = "dotnet8"
+  lambda_zip_path  = "./lambdas/dotnet/bin/Release/net8.0/app.zip"
+}
+
+module "kotlin_lambda_module" {
+  source           = "./modules/lambda"
+  aws_region       = var.aws_region
+  lambda_name      = "${var.resource_prefix}-kotlin-lambda"
+  lambda_role_name = "${var.resource_prefix}-kotlin-lambda-role"
+  lambda_handler   = "com.example.AppKt::handleRequest"
+  lambda_runtime   = "java21"
+  lambda_zip_path  = "./lambdas/kotlin/build/libs/kotlin.jar"
+}
+

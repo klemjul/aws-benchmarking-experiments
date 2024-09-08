@@ -11,6 +11,12 @@
     },
     {
       "functionName": "aws-benchmarking-experiments-python-lambda"
+    },
+    {
+      "functionName": "aws-benchmarking-experiments-dotnet-lambda"
+    },
+    {
+      "functionName": "aws-benchmarking-experiments-kotlin-lambda"
     }
   ]
 }

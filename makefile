@@ -16,9 +16,13 @@ build-lambda-go:
 	cd lambdas/go && make build
 build-lambda-python:
 	cd lambdas/python && make build
+build-lambda-dotnet:
+	cd lambdas/dotnet && make build
+build-lambda-kotlin:
+	cd lambdas/kotlin && make build-app
 
 
-build: build-lambda-java build-lambda-ts-esbuild build-lambda-go
+build: build-lambda-java build-lambda-ts-esbuild build-lambda-go build-lambda-python build-lambda-dotnet build-lambda-kotlin
 	
 bench: 
 	cd benchmarking && make bench-lambda-runtimes

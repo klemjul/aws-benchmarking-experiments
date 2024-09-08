@@ -22,7 +22,7 @@ build-lambda-kotlin:
 	cd lambdas/kotlin && make build-app
 
 
-build: build-lambda-java build-lambda-ts-esbuild build-lambda-go build-lambda-python build-lambda-dotnet build-lambda-kotlin
+build-lambdas: build-lambda-java build-lambda-ts-esbuild build-lambda-go build-lambda-python build-lambda-dotnet build-lambda-kotlin
 	
-bench: 
+bench-lambdas: 
 	cd benchmarking && make bench-lambda-runtimes

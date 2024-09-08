@@ -16,7 +16,7 @@ import (
 type InvokeLambdaTimedOutput struct {
 	FunctionName   string
 	Response       string
-	SdkDuration    string
+	SdkDuration    time.Duration
 	InitDuration   string
 	BilledDuration string
 	Duration       string
@@ -48,7 +48,6 @@ func InvokeLambdaTimed(ctx context.Context, svc *lambda.Client, functionName str
 		LogType:      "Tail",
 	})
 	duration := time.Since(startTime)
-	durationMs := duration.Milliseconds()
 
 	if err != nil {
 		return Result[InvokeLambdaTimedOutput]{
@@ -63,7 +62,7 @@ func InvokeLambdaTimed(ctx context.Context, svc *lambda.Client, functionName str
 		return Result[InvokeLambdaTimedOutput]{
 			Error: fmt.Errorf("lambda function returned an error: %s", *result.FunctionError),
 			Value: InvokeLambdaTimedOutput{
-				SdkDuration:  fmt.Sprintf("%v ms", durationMs),
+				SdkDuration:  duration,
 				FunctionName: functionName,
 			},
 		}
@@ -83,7 +82,7 @@ func InvokeLambdaTimed(ctx context.Context, svc *lambda.Client, functionName str
 	return Result[InvokeLambdaTimedOutput]{
 		Value: InvokeLambdaTimedOutput{
 			Response:       string(result.Payload),
-			SdkDuration:    fmt.Sprintf("%v ms", durationMs),
+			SdkDuration:    duration,
 			FunctionName:   functionName,
 			InitDuration:   fmt.Sprintf("%v ms", metrics["init_duration"]),
 			MaxMemoryUsed:  fmt.Sprintf("%v MB", metrics["max_memory_used"]),

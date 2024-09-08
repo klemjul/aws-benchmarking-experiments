@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"sort"
 	"strings"
 	"sync"
 
@@ -16,6 +17,12 @@ import (
 	"github.com/klemjul/aws-benchmarking-experiments/benchmarking/internal"
 	"github.com/olekukonko/tablewriter"
 )
+
+type ByDuration []internal.Result[internal.InvokeLambdaTimedOutput]
+
+func (a ByDuration) Len() int           { return len(a) }
+func (a ByDuration) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ByDuration) Less(i, j int) bool { return a[i].Value.SdkDuration < a[j].Value.SdkDuration }
 
 func main() {
 	configFilePath := flag.String("config", "config.json", "Path to the configuration file")
@@ -47,6 +54,7 @@ func main() {
 	lambdaClient := lambda.NewFromConfig(sdkConfig)
 
 	results := make(chan internal.Result[internal.InvokeLambdaTimedOutput], len(config.Lambdas))
+	var values []internal.Result[internal.InvokeLambdaTimedOutput]
 	var wg sync.WaitGroup
 
 	for i := 0; i < len(config.Lambdas); i++ {
@@ -65,16 +73,23 @@ func main() {
 	close(results)
 
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"FunctionName", "SdkDuration", "Duration", "InitDuration", "Duration", "MaxMemoruUsed"})
+	table.SetHeader([]string{"FunctionName", "SdkDuration", "Duration", "InitDuration", "MaxMemoruUsed"})
 	for result := range results {
-		fnType := strings.Split(result.Value.FunctionName, "aws-benchmarking-experiments-")
+		values = append(values, result)
+	}
 
-		if result.Error != nil {
-			fmt.Println(result.Error)
-			table.Append([]string{fnType[1], result.Value.SdkDuration, result.Value.Duration})
+	sort.Sort(ByDuration(values))
+	for _, value := range values {
+		fnType := strings.Split(value.Value.FunctionName, "aws-benchmarking-experiments-")
+		durationMs := value.Value.SdkDuration.Milliseconds()
+
+		if value.Error != nil {
+			fmt.Println(value.Error)
+			table.Append([]string{fnType[1], fmt.Sprintf("%v ms", durationMs), value.Value.Duration})
 		} else {
-			table.Append([]string{fnType[1], result.Value.SdkDuration, result.Value.Duration, result.Value.InitDuration, result.Value.Duration, result.Value.MaxMemoryUsed})
+			table.Append([]string{fnType[1], fmt.Sprintf("%v ms", durationMs), value.Value.Duration, value.Value.InitDuration, value.Value.MaxMemoryUsed})
 		}
 	}
+
 	table.Render()
 }

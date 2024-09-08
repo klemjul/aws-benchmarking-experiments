@@ -9,7 +9,7 @@ apply-lambda-runtimes:
 	cd infrastructure/lambda-runtimes && terraform apply
 
 build-lambda-runtimes:
-	cd infrastructure/lambda-runtimes && make build-lambda-runtimes
+	cd infrastructure/lambda-runtimes && make build-lambdas
 
 bench-lambda-runtimes: 
 	cd benchmarking && make bench-lambda-runtimes

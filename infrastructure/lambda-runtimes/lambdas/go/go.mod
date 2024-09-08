@@ -1,4 +1,4 @@
-module github.com/klemjul/aws-benchmarking-experiments/lambdas/go
+module github.com/klemjul/aws-benchmarking-experiments/infrastructure/lambda-runtimes/lambdas/go
 
 go 1.23.1
 

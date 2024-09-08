@@ -17,7 +17,7 @@ provider "aws" {
 
 
 module "javascript_lambda_module" {
-  source           = "./modules/lambda"
+  source           = "../modules/lambda"
   aws_region       = var.aws_region
   lambda_name      = "${var.resource_prefix}-ts-esbuild-lambda"
   lambda_role_name = "${var.resource_prefix}-ts-esbuild-lambda-role"
@@ -27,7 +27,7 @@ module "javascript_lambda_module" {
 }
 
 module "java_lambda_module" {
-  source           = "./modules/lambda"
+  source           = "../modules/lambda"
   aws_region       = var.aws_region
   lambda_name      = "${var.resource_prefix}-java-lambda"
   lambda_role_name = "${var.resource_prefix}-java-lambda-role"
@@ -37,7 +37,7 @@ module "java_lambda_module" {
 }
 
 module "go_lambda_module" {
-  source           = "./modules/lambda"
+  source           = "../modules/lambda"
   aws_region       = var.aws_region
   lambda_name      = "${var.resource_prefix}-go-lambda"
   lambda_role_name = "${var.resource_prefix}-go-lambda-role"
@@ -48,7 +48,7 @@ module "go_lambda_module" {
 
 
 module "python_lambda_module" {
-  source           = "./modules/lambda"
+  source           = "../modules/lambda"
   aws_region       = var.aws_region
   lambda_name      = "${var.resource_prefix}-python-lambda"
   lambda_role_name = "${var.resource_prefix}-python-lambda-role"
@@ -58,7 +58,7 @@ module "python_lambda_module" {
 }
 
 module "dotnet_lambda_module" {
-  source           = "./modules/lambda"
+  source           = "../modules/lambda"
   aws_region       = var.aws_region
   lambda_name      = "${var.resource_prefix}-dotnet-lambda"
   lambda_role_name = "${var.resource_prefix}-dotnet-lambda-role"
@@ -68,7 +68,7 @@ module "dotnet_lambda_module" {
 }
 
 module "kotlin_lambda_module" {
-  source           = "./modules/lambda"
+  source           = "../modules/lambda"
   aws_region       = var.aws_region
   lambda_name      = "${var.resource_prefix}-kotlin-lambda"
   lambda_role_name = "${var.resource_prefix}-kotlin-lambda-role"
@@ -76,4 +76,3 @@ module "kotlin_lambda_module" {
   lambda_runtime   = "java21"
   lambda_zip_path  = "./lambdas/kotlin/build/libs/kotlin.jar"
 }
-

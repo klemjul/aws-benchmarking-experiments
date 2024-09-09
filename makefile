@@ -1,28 +1,29 @@
 
-init:
-	terraform init -backend-config=backend.conf
+init-lambda-runtimes:
+	cd infrastructure/lambda-runtimes && terraform init -backend-config=backend.conf
 
-plan: 
-	terraform plan
+plan-lambda-runtimes: 
+	cd infrastructure/lambda-runtimes && terraform plan
 
-apply: 
-	terraform apply
+apply-lambda-runtimes: 
+	cd infrastructure/lambda-runtimes && terraform apply
 
-build-lambda-java:
-	cd lambdas/java && mvn package
-build-lambda-ts-esbuild:
-	cd lambdas/ts-esbuild && npm run build
-build-lambda-go:
-	cd lambdas/go && make build
-build-lambda-python:
-	cd lambdas/python && make build
-build-lambda-dotnet:
-	cd lambdas/dotnet && make build
-build-lambda-kotlin:
-	cd lambdas/kotlin && make build-app
+build-lambda-runtimes:
+	cd infrastructure/lambda-runtimes && make build-lambdas
 
-
-build-lambdas: build-lambda-java build-lambda-ts-esbuild build-lambda-go build-lambda-python build-lambda-dotnet build-lambda-kotlin
-	
-bench-lambdas: 
+bench-lambda-runtimes: 
 	cd benchmarking && make bench-lambda-runtimes
+
+
+
+init-apigw-latency:
+	cd infrastructure/apigw-latency && terraform init -backend-config=backend.conf
+
+plan-apigw-latency: 
+	cd infrastructure/apigw-latency && terraform plan
+
+apply-apigw-latency: 
+	cd infrastructure/apigw-latency && terraform apply
+
+build-apigw-latency:
+	cd infrastructure/apigw-latency && make build-lambda

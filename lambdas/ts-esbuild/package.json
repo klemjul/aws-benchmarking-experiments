@@ -6,9 +6,9 @@
     "build": "rimraf dist && esbuild app.ts --bundle --platform=node --target=node20 --outfile=./dist/app/index.js && cd dist/app && zip -r ../app.zip *"
   },
   "devDependencies": {
-    "@types/aws-lambda": "8.10.145",
-    "esbuild": "0.23.1",
-    "rimraf": "6.0.1",
-    "typescript": "5.5.4"
+    "@types/aws-lambda": "8.10.159",
+    "esbuild": "0.27.1",
+    "rimraf": "6.1.2",
+    "typescript": "5.9.3"
   }
 }
